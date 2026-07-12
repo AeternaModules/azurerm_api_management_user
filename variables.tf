@@ -12,20 +12,24 @@ Optional:
     - confirmation
     - note
     - password
+    - password_key_vault_id (alternative to password - read from Key Vault instead)
+    - password_key_vault_secret_name (alternative to password - read from Key Vault instead)
     - state
 EOT
 
   type = map(object({
-    api_management_name = string
-    email               = string
-    first_name          = string
-    last_name           = string
-    resource_group_name = string
-    user_id             = string
-    confirmation        = optional(string)
-    note                = optional(string)
-    password            = optional(string)
-    state               = optional(string)
+    api_management_name            = string
+    email                          = string
+    first_name                     = string
+    last_name                      = string
+    resource_group_name            = string
+    user_id                        = string
+    confirmation                   = optional(string)
+    note                           = optional(string)
+    password                       = optional(string)
+    password_key_vault_id          = optional(string)
+    password_key_vault_secret_name = optional(string)
+    state                          = optional(string)
   }))
   validation {
     condition = alltrue([
