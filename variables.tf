@@ -31,30 +31,6 @@ EOT
     password_key_vault_secret_name = optional(string)
     state                          = optional(string)
   }))
-  validation {
-    condition = alltrue([
-      for k, v in var.api_management_users : (
-        length(v.first_name) > 0
-      )
-    ])
-    error_message = "must not be empty"
-  }
-  validation {
-    condition = alltrue([
-      for k, v in var.api_management_users : (
-        length(v.email) > 0
-      )
-    ])
-    error_message = "must not be empty"
-  }
-  validation {
-    condition = alltrue([
-      for k, v in var.api_management_users : (
-        length(v.last_name) > 0
-      )
-    ])
-    error_message = "must not be empty"
-  }
   # --- Unconfirmed validation candidates, derived from azurerm_api_management_user's provider source ---
   # Not auto-enabled: either a bespoke provider validator we can't safely translate,
   # or a path that crosses a list-typed block (needs its own for_each wrapping).
@@ -79,6 +55,15 @@ EOT
   #   source:    [from resourcegroups.ValidateName: invalid when len(value) == 0]
   # path: resource_group_name
   #   source:    [from resourcegroups.ValidateName] !matched
+  # path: first_name
+  #   condition: length(value) > 0
+  #   message:   must not be empty
+  # path: email
+  #   condition: length(value) > 0
+  #   message:   must not be empty
+  # path: last_name
+  #   condition: length(value) > 0
+  #   message:   must not be empty
   # path: confirmation
   #   source:    validation.StringInSlice value list is not a literal []string - likely a generated PossibleValuesFor*() helper; resolve separately
   # path: state
